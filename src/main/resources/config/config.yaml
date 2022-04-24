@@ -1,0 +1,5 @@
+path: jdbc:mysql://dam2.mysql.iesquevedo.es:3335/Entrenamientos-MarioOnetti?serverTimeZone=GMT+1&useSSL=false
+user: root
+passw: quevedo2dam
+driver: com.mysql.cj.jdbc.Driver
+host: smtp.gmail.com
