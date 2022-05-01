@@ -16,4 +16,6 @@ public class ClienteDTO {
     private String username;
     private String password;
     private int idEntrenador;
+    private String nombre;
+    private String apellidos;
 }

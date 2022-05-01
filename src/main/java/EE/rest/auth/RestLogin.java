@@ -17,19 +17,18 @@ import services.auth.AuthService;
 import utils.constantes.Mensajes;
 import utils.constantes.RestConstants;
 
-@Path(RestConstants.AUTHENTICATION_PATH)
+@Path(RestConstants.LOGIN_PATH)
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 @Log4j2
-public class AuthRest {
+public class RestLogin {
 
     private final AuthService authService;
-    private final Pbkdf2PasswordHash passwordHash;
 
     @Inject
-    public AuthRest(AuthService authService, Pbkdf2PasswordHash passwordHash) {
+    public RestLogin(AuthService authService) {
         this.authService = authService;
-        this.passwordHash = passwordHash;
+
     }
 
     @POST
@@ -37,21 +36,12 @@ public class AuthRest {
     @PermitAll
     public Response loginEntrenador(UserDTO user){
         Response response;
-        Either<String, EntrenadorDTO> result = authService.getEntrenador(user.getUsername());
+        Either<String, EntrenadorDTO> result = authService.getEntrenador(user.getUsername(), user.getUsername().toCharArray());
         if (result.isRight()) {
-            if (passwordHash.verify(user.getPassw().toCharArray(),
-                    result.get().getPassword())) {
-                result.get().setPassword(null);
-                response = Response.status(Response.Status.OK)
+
+            response = Response.status(Response.Status.OK)
                         .entity(result.get())
                         .build();
-            } else {
-//                Tratar contra incorrecta
-                response = Response.status(Response.Status.NOT_FOUND)
-                        .entity(new ApiError(Mensajes.USUARIO_O_CONTRASEÑA_INCORRECTOS))
-                        .build();
-
-            }
 
         } else {
             response = Response.status(Response.Status.NOT_FOUND).entity(new ApiError(result.getLeft())).build();
@@ -65,21 +55,14 @@ public class AuthRest {
     @PermitAll
     public Response loginCliente(UserDTO user){
         Response response;
-        Either<String, ClienteDTO> result = authService.getCliente(user.getUsername());
+        Either<String, ClienteDTO> result = authService.getCliente(user.getUsername(), user.getUsername().toCharArray());
         if (result.isRight()) {
-            if (passwordHash.verify(user.getPassw().toCharArray(),
-                    result.get().getPassword())) {
-                result.get().setPassword(null);
+
                 response = Response.status(Response.Status.OK)
                         .entity(result.get())
                         .build();
-            } else {
-                response = Response.status(Response.Status.NOT_FOUND)
-                        .entity(new ApiError(Mensajes.USUARIO_O_CONTRASEÑA_INCORRECTOS))
-                        .build();
             }
-
-        } else {
+        else {
             response = Response.status(Response.Status.NOT_FOUND)
                     .entity(new ApiError(result.getLeft())).build();
         }

@@ -14,8 +14,9 @@ public class EntrenadorDTO {
     private int id;
     private String username;
     private String password;
-    private double valoracion;
     private String descripcion;
+    private String nombre;
+    private String apellidos;
 
 
 }
