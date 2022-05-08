@@ -15,4 +15,5 @@ public class RestConstants {
     public static final String LOGIN_PATH ="/login";
     public static final String LOGIN_CLIENTE = "/cliente";
     public static final String LOGIN_ENTRENADOR ="/entrenador" ;
+    public static final String ENTRENAMIENTO_PATH = "/entreno";
 }

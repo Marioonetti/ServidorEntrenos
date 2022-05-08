@@ -48,6 +48,24 @@ public class EjerciciosDAO {
     }
 
 
+    public Either<String, EjercicioDTO> getEjercicioById(int id){
+
+        Either<String, EjercicioDTO> result;
+
+        try {
+            JdbcTemplate jdbcTemplate = new JdbcTemplate(pool.getDataSource());
+            EjercicioDTO ejercicio = jdbcTemplate.queryForObject(Queries.GET_EJERCICIO_BY_ID,
+                    new BeanPropertyRowMapper<>(EjercicioDTO.class), id);
+            result = Either.right(ejercicio);
+
+        }catch (DataAccessException ex){
+            log.error(ex.getMessage());
+            result = Either.left(Mensajes.ERROR_AL_EXTRAER_LOS_DATOS);
+
+        }
+        return result;
+    }
+
 
     public Either<String, EjercicioDTO> addEjercicio(EjercicioDTO ejercicioDTO) {
         Either<String, EjercicioDTO> result;
