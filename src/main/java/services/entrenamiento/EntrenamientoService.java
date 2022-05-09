@@ -3,8 +3,7 @@ package services.entrenamiento;
 import dao.EntrenamientoDAO;
 import io.vavr.control.Either;
 import jakarta.inject.Inject;
-import model.dto.entrenamiento.add.EntrenamientoDTO;
-import model.dto.entrenamiento.get.EntrenamientoClienteDTO;
+import model.dto.EntrenamientoDTO;
 
 import java.util.List;
 
@@ -17,7 +16,7 @@ public class EntrenamientoService {
         this.dao = dao;
     }
 
-    public Either<String, EntrenamientoDTO> addEntreno(EntrenamientoDTO entreno){
+    public Either<String, EntrenamientoDTO> addEntreno(EntrenamientoDTO entreno) {
         return dao.addEntreno(entreno);
     }
 

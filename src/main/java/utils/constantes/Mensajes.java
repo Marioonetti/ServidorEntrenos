@@ -12,4 +12,5 @@ public class Mensajes {
     public static final String FALTA_ALGUN_PARAMETRO = "Falta algún parametro por introducir";
     public static final String ESE_USUARIO_YA_EXISTE = "Ese usuario ya existe";
     public static final String ERROR_AL_AÑADIR = "Error al añadar los datos";
+    public static final String ERROR_DESCONOCIDO = "Error desconocido";
 }

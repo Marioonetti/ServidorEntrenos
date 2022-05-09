@@ -9,8 +9,7 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import lombok.extern.log4j.Log4j2;
 import model.dto.ApiError;
-import model.dto.entrenamiento.add.EntrenamientoDTO;
-import model.dto.entrenamiento.get.EntrenamientoClienteDTO;
+import model.dto.EntrenamientoDTO;
 import services.entrenamiento.EntrenamientoService;
 import utils.constantes.RestConstants;
 
@@ -31,17 +30,16 @@ public class RestEntrenamiento {
 
     @POST
     @RolesAllowed({RestConstants.USER_TRAINER})
-    public Response addEntrenamiento(EntrenamientoDTO entrenamientoDTO){
+    public Response addEntrenamiento(EntrenamientoDTO entrenamientoDTO) {
         Either<String, EntrenamientoDTO> result = entrenamientoService.addEntreno(entrenamientoDTO);
         Response response = null;
-        if (result.isRight()){
+        if (result.isRight()) {
 
             response = Response
                     .status(Response.Status.CREATED)
                     .entity(result.get())
                     .build();
-        }
-        else {
+        } else {
             Response
                     .status(Response.Status.NOT_FOUND)
                     .entity(new ApiError(result.getLeft()))
@@ -53,17 +51,16 @@ public class RestEntrenamiento {
 
     @GET
     @RolesAllowed({RestConstants.USER_CLIENTE})
-    public Response getEntrenos(@QueryParam("idCliente") int idCliente){
+    public Response getEntrenos(@QueryParam("idCliente") int idCliente) {
         Either<String, List<EntrenamientoDTO>> result = entrenamientoService.getEntrenosCliente(idCliente);
         Response response = null;
-        if (result.isRight()){
+        if (result.isRight()) {
 
             response = Response
                     .status(Response.Status.OK)
                     .entity(result.get())
                     .build();
-        }
-        else {
+        } else {
             Response
                     .status(Response.Status.NOT_FOUND)
                     .entity(new ApiError(result.getLeft()))

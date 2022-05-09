@@ -18,5 +18,11 @@ public class EntrenadorDTO {
     private String nombre;
     private String apellidos;
 
-
+    public EntrenadorDTO(int id, String username, String descripcion, String nombre, String apellidos) {
+        this.id = id;
+        this.username = username;
+        this.descripcion = descripcion;
+        this.nombre = nombre;
+        this.apellidos = apellidos;
+    }
 }

@@ -1,4 +1,4 @@
-package model.dto.entrenamiento.add;
+package model.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -8,9 +8,8 @@ import io.vavr.control.Either;
 import jakarta.inject.Inject;
 import lombok.extern.log4j.Log4j2;
 import model.dto.EjercicioDTO;
-import model.dto.entrenamiento.add.EntrenamientoDTO;
-import model.dto.entrenamiento.add.Serie;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import model.dto.EntrenamientoDTO;
+import model.dto.Serie;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
@@ -18,9 +17,7 @@ import utils.constantes.Mensajes;
 
 import java.sql.PreparedStatement;
 import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicReference;
 
 @Log4j2
 public class EntrenamientoDAO {

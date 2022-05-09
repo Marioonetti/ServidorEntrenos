@@ -1,7 +1,6 @@
 package dao.datamapper;
 
-import model.dto.entrenamiento.add.EntrenamientoDTO;
-import model.dto.entrenamiento.add.Serie;
+import model.dto.Serie;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;

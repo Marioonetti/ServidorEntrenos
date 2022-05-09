@@ -11,7 +11,7 @@ public class Queries {
             "    values (?,?,?,?,?);";
     public static final String GET_ENTRENADOR = "select  *  from entrenador where username = ?;";
     public static final String GET_CLIENTE = "select  *  from cliente where username = ?;";
-    public static final String ADD_CLIENTE = "insert into cliente (username, password, idEntrenador, nombre, apellidos) VALUES (?, ?, ?, ?, ?)";
+    public static final String ADD_CLIENTE = "insert into cliente (username, password, idEntrenador, nombre, apellidos) VALUES (?, ?, 0, ?, ?)";
     public static final String ADD_ENTRENADOR = "insert into entrenador (username, password, descripcion, nombre, apellidos) VALUES (?, ?, ?, ?, ?)";
     public static final String INSERT_ENTRENO = "insert into entrenamiento (comentario, idCliente) values (?, ?);";
     public static final String INSER_SERIE = "insert into series (rir, series_repeticiones, idEjercicio) VALUES (?, ?, ?);";
@@ -30,4 +30,10 @@ public class Queries {
             "where id in (select idSerie from entrenamiento_series where idEntrenamiento = ?);";
 
     public static final String GET_EJERCICIO_BY_ID = "select * from ejercicio where id = ?;";
+    public static final String ADD_DESCRIPCION = "update entrenador set descripcion = ? where id = ?;";
+    public static final String ALTA_ENTRENADOR = "update cliente set idEntrenador = ? where  id = ?;";
+    public static final String BAJA_ENTRENADOR = "update cliente set idEntrenador = 0 where  id = ?;";
+    public static final String ENTRENADOR_BY_ID = "select  * from entrenador where id = ?;";
+
+    public static final String GET_ALL_ENTRENADORES = "select *  from entrenador;";
 }
