@@ -12,10 +12,11 @@ public class EntrenadorMapper implements RowMapper<EntrenadorDTO> {
     public EntrenadorDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
         return new EntrenadorDTO(
                 rs.getInt("id"),
-                rs.getString("username"),
                 rs.getString("descripcion"),
                 rs.getString("nombre"),
-                rs.getString("apellidos")
+                rs.getString("apellidos"),
+                rs.getInt("edad"),
+                rs.getString("imagen")
         );
     }
 

@@ -17,12 +17,15 @@ public class EntrenadorDTO {
     private String descripcion;
     private String nombre;
     private String apellidos;
+    private int edad;
+    private String imagen;
 
-    public EntrenadorDTO(int id, String username, String descripcion, String nombre, String apellidos) {
+    public EntrenadorDTO(int id, String descripcion, String nombre, String apellidos, int edad, String imagen) {
         this.id = id;
-        this.username = username;
         this.descripcion = descripcion;
         this.nombre = nombre;
         this.apellidos = apellidos;
+        this.edad = edad;
+        this.imagen = imagen;
     }
 }

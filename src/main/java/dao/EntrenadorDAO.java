@@ -51,9 +51,11 @@ public class EntrenadorDAO {
         Either<String, List<EntrenadorDTO>> result;
         try {
             JdbcTemplate jdbcTemplate = new JdbcTemplate(pool.getDataSource());
-            List<EntrenadorDTO> purchaseList = jdbcTemplate.query(Queries.GET_ALL_ENTRENADORES,
+            List<EntrenadorDTO> entrenadoresList = jdbcTemplate.query(Queries.GET_ALL_ENTRENADORES,
                     new EntrenadorMapper());
-            result = Either.right(purchaseList);
+            entrenadoresList.removeIf(entrenador ->
+                    entrenador.getId() == 0);
+            result = Either.right(entrenadoresList);
         } catch (Exception ex) {
             log.error(ex.getMessage());
             result = Either.left(Mensajes.ERROR_DESCONOCIDO);

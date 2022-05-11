@@ -18,6 +18,6 @@ public class RestConstants {
     public static final String ENTRENAMIENTO_PATH = "/entreno";
     public static final String CLIENTE_PATH = "/cliente";
     public static final String ALTA_ENTRENADOR = "/alta";
-
+    public static final String ENTRENADOR_PATH = "/entrenador";
     public static final String BAJA_ENTRENADOR = "/baja";
 }

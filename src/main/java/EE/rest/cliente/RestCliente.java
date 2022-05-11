@@ -1,6 +1,7 @@
 package EE.rest.cliente;
 
 import io.vavr.control.Either;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.PUT;
@@ -30,6 +31,7 @@ public class RestCliente {
 
     @PUT
     @Path(RestConstants.ALTA_ENTRENADOR)
+    @RolesAllowed({RestConstants.USER_CLIENTE})
     public Response altaEntrenador(ClienteDTO clienteDTO){
         Response response = null;
         Either<String, ClienteDTO> result = service.darAltaEntrenador(clienteDTO);
@@ -52,6 +54,7 @@ public class RestCliente {
 
     @PUT
     @Path(RestConstants.BAJA_ENTRENADOR)
+    @RolesAllowed({RestConstants.USER_CLIENTE})
     public Response bajaEntrenador(ClienteDTO clienteDTO){
         Response response = null;
         Either<String, ClienteDTO> result = service.darBajaEntrenador(clienteDTO);

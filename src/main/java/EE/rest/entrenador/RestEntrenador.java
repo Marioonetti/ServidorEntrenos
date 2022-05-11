@@ -2,6 +2,7 @@ package EE.rest.entrenador;
 
 
 import io.vavr.control.Either;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.ws.rs.*;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.core.MediaType;
@@ -14,7 +15,7 @@ import utils.constantes.RestConstants;
 
 import java.util.List;
 
-@Path(RestConstants.ENTRENAMIENTO_PATH)
+@Path(RestConstants.ENTRENADOR_PATH)
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 @Log4j2
@@ -28,6 +29,7 @@ public class RestEntrenador {
     }
 
     @PUT
+    @RolesAllowed({RestConstants.USER_TRAINER})
     public Response addDescripcion(EntrenadorDTO entrenadorDTO){
         Response response = null;
         Either<String, EntrenadorDTO> result = service.addDescripcion(entrenadorDTO);
@@ -50,6 +52,7 @@ public class RestEntrenador {
     }
 
     @GET
+    @RolesAllowed({RestConstants.USER_CLIENTE})
     public Response getAll(){
         Response response = null;
         Either<String, List<EntrenadorDTO>> result = service.getAllEntrenadores();
@@ -73,6 +76,7 @@ public class RestEntrenador {
 
     @GET
     @Path("/{id}")
+    @RolesAllowed({RestConstants.USER_CLIENTE})
     public Response getById(@PathParam("id") int id){
         Response response = null;
         Either<String, EntrenadorDTO> result = service.getById(id);

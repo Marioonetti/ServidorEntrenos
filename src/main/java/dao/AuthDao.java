@@ -89,9 +89,8 @@ public class AuthDao {
                         Statement.RETURN_GENERATED_KEYS);
                 preparedStatement.setString(1, user.getUsername());
                 preparedStatement.setString(2, user.getPassword());
-                preparedStatement.setInt(3, 1);
-                preparedStatement.setObject(4, user.getNombre());
-                preparedStatement.setString(5, user.getApellidos());
+                preparedStatement.setObject(3, user.getNombre());
+                preparedStatement.setString(4, user.getApellidos());
                 return preparedStatement;
             }, keyHolder);
             user.setId(keyHolder.getKey().intValue());
