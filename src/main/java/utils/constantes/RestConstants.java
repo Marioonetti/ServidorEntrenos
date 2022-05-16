@@ -20,4 +20,6 @@ public class RestConstants {
     public static final String ALTA_ENTRENADOR = "/alta";
     public static final String ENTRENADOR_PATH = "/entrenador";
     public static final String BAJA_ENTRENADOR = "/baja";
+    public static final String EJERCICIOS_FILTRO_NOMBRE = "/nombre";
+    public static final String ENTRENADOR_ID_PATH = "/{id}";
 }

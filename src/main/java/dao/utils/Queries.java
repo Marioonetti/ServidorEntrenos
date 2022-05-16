@@ -34,6 +34,7 @@ public class Queries {
     public static final String ALTA_ENTRENADOR = "update cliente set idEntrenador = ? where  id = ?;";
     public static final String BAJA_ENTRENADOR = "update cliente set idEntrenador = 0 where  id = ?;";
     public static final String ENTRENADOR_BY_ID = "select  * from entrenador where id = ?;";
-
+    public static final String GET_EJERCICIOS_POR_NOMBRE = "select * from ejercicio where nombre like concat(?, '%');";
     public static final String GET_ALL_ENTRENADORES = "select *  from entrenador;";
+    public static final String SELECT_ID_ENTRENADOR = "select idEntrenador from cliente where id = ?;";
 }

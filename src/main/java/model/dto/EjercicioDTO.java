@@ -14,7 +14,7 @@ public class EjercicioDTO {
     private int id;
     private String nombre;
     private String intensidad;
-    private String musculoEnfocado;
+    private String grupoMuscular;
     private String img;
     private String descripcion;
 

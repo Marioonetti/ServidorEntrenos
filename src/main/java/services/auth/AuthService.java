@@ -40,7 +40,7 @@ public class AuthService {
                 result = Either.right(resultDao.get());
             } else {
 //                Tratar contra incorrecta
-                result = Either.left(Mensajes.USUARIO_O_CONTRASEÑA_INCORRECTOS);
+                result = Either.left(Mensajes.USUARIO_O_CONTRASENIA_INCORRECTOS);
 
             }
         } else {
@@ -60,7 +60,7 @@ public class AuthService {
                 result = Either.right(resultDao.get());
             } else {
 //                Tratar contra incorrecta
-                result = Either.left(Mensajes.USUARIO_O_CONTRASEÑA_INCORRECTOS);
+                result = Either.left(Mensajes.USUARIO_O_CONTRASENIA_INCORRECTOS);
 
             }
         } else {

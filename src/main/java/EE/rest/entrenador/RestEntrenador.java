@@ -12,6 +12,7 @@ import model.dto.ApiError;
 import model.dto.EntrenadorDTO;
 import services.usuarios.EntrenadorService;
 import utils.constantes.RestConstants;
+import utils.constantes.RestParams;
 
 import java.util.List;
 
@@ -75,9 +76,9 @@ public class RestEntrenador {
     }
 
     @GET
-    @Path("/{id}")
+    @Path(RestConstants.ENTRENADOR_ID_PATH)
     @RolesAllowed({RestConstants.USER_CLIENTE})
-    public Response getById(@PathParam("id") int id){
+    public Response getById(@PathParam(RestParams.ID_PARAM) int id){
         Response response = null;
         Either<String, EntrenadorDTO> result = service.getById(id);
         if (result.isRight()){

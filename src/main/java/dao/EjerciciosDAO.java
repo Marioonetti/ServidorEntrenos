@@ -1,5 +1,6 @@
 package dao;
 
+import dao.datamapper.EjercicioMapper;
 import dao.jdbc.DBConnectionPool;
 import dao.utils.Queries;
 import io.vavr.control.Either;
@@ -48,6 +49,23 @@ public class EjerciciosDAO {
     }
 
 
+    public Either<String, List<EjercicioDTO>> getEjerciciosByName(String nombre){
+        Either<String, List<EjercicioDTO>> result;
+
+        try {
+            JdbcTemplate jdbcTemplate = new JdbcTemplate(pool.getDataSource());
+            List<EjercicioDTO> purchaseList = jdbcTemplate.query(Queries.GET_EJERCICIOS_POR_NOMBRE,
+                    new EjercicioMapper(), nombre);
+            result = Either.right(purchaseList);
+
+        }catch (DataAccessException ex){
+            log.error(ex.getMessage());
+            result = Either.left(Mensajes.ERROR_DESCONOCIDO);
+
+        }
+        return result;
+    }
+
     public Either<String, EjercicioDTO> getEjercicioById(int id){
 
         Either<String, EjercicioDTO> result;
@@ -78,7 +96,7 @@ public class EjerciciosDAO {
                         connection.prepareStatement(Queries.INSERT_EQUIPO_QUERIE, Statement.RETURN_GENERATED_KEYS);
                 preparedStatement.setString(1, ejercicioDTO.getNombre());
                 preparedStatement.setString(2, ejercicioDTO.getIntensidad());
-                preparedStatement.setString(3, ejercicioDTO.getMusculoEnfocado());
+                preparedStatement.setString(3, ejercicioDTO.getGrupoMuscular());
                 preparedStatement.setString(4, ejercicioDTO.getImg());
                 preparedStatement.setString(5, ejercicioDTO.getDescripcion());
                 return preparedStatement;

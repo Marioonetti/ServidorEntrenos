@@ -10,6 +10,8 @@ import model.dto.EntrenadorDTO;
 import org.springframework.jdbc.core.JdbcTemplate;
 import utils.constantes.Mensajes;
 
+import java.time.LocalDateTime;
+
 @Log4j2
 public class ClienteDAO {
 
@@ -25,10 +27,20 @@ public class ClienteDAO {
         Either<String, ClienteDTO> result;
         try {
             JdbcTemplate jdbcTemplate = new JdbcTemplate(pool.getDataSource());
-            jdbcTemplate.update(Queries.ALTA_ENTRENADOR,
-                    cliente.getIdEntrenador(),
-                    cliente.getId());
-            result = Either.right(cliente);
+
+            int idEntrenador = jdbcTemplate.queryForObject(Queries.SELECT_ID_ENTRENADOR,
+                    Integer.class, cliente.getId());
+
+            if (idEntrenador == 0){
+                jdbcTemplate.update(Queries.ALTA_ENTRENADOR,
+                        cliente.getIdEntrenador(),
+                        cliente.getId());
+                result = Either.right(cliente);
+            }
+            else {
+                result = Either.left(Mensajes.ERROR_ALTA_CLIENTE);
+            }
+
         } catch (Exception ex) {
             log.error(ex.getMessage());
             result = Either.left(Mensajes.ERROR_DESCONOCIDO);
@@ -44,10 +56,19 @@ public class ClienteDAO {
         Either<String, ClienteDTO> result;
         try {
             JdbcTemplate jdbcTemplate = new JdbcTemplate(pool.getDataSource());
-            jdbcTemplate.update(Queries.BAJA_ENTRENADOR,
-                    clienteDTO.getId());
-            clienteDTO.setIdEntrenador(0);
-            result = Either.right(clienteDTO);
+            int idEntrenador = jdbcTemplate.queryForObject(Queries.SELECT_ID_ENTRENADOR,
+                    Integer.class, clienteDTO.getId());
+
+            if (idEntrenador != 0){
+                jdbcTemplate.update(Queries.BAJA_ENTRENADOR,
+                        clienteDTO.getId());
+                clienteDTO.setIdEntrenador(0);
+                result = Either.right(clienteDTO);
+            }
+            else {
+                result = Either.left(Mensajes.ERROR_BAJA_ENTRENADOR);
+            }
+
         } catch (Exception ex) {
             log.error(ex.getMessage());
             result = Either.left(Mensajes.ERROR_DESCONOCIDO);

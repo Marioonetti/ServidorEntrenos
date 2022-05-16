@@ -55,7 +55,7 @@ public class RestLogin {
     @PermitAll
     public Response loginCliente(UserDTO user){
         Response response;
-        Either<String, ClienteDTO> result = authService.getCliente(user.getUsername(), user.getUsername().toCharArray());
+        Either<String, ClienteDTO> result = authService.getCliente(user.getUsername(), user.getPassw().toCharArray());
         if (result.isRight()) {
 
                 response = Response.status(Response.Status.OK)

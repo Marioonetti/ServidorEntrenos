@@ -24,4 +24,8 @@ public class EjerciciosService {
         return dao.addEjercicio(ejercicioDTO);
     }
 
+    public Either<String, List<EjercicioDTO>> getEjerciciosByName(String nombre){
+        return dao.getEjerciciosByName(nombre);
+    }
+
 }

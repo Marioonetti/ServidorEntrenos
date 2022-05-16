@@ -36,19 +36,17 @@ public class RestCliente {
         Response response = null;
         Either<String, ClienteDTO> result = service.darAltaEntrenador(clienteDTO);
         if (result.isRight()){
-
             response = Response
                     .status(Response.Status.CREATED)
                     .entity(result.get())
                     .build();
         }
         else {
-            Response
+            response = Response
                     .status(Response.Status.NOT_FOUND)
                     .entity(new ApiError(result.getLeft()))
                     .build();
         }
-
         return response;
     }
 

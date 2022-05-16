@@ -82,7 +82,7 @@ public class EntrenamientoDAO {
 
         } catch (Exception ex) {
             log.error(ex.getMessage());
-            result = Either.left(Mensajes.ERROR_AL_AÑADIR);
+            result = Either.left(Mensajes.ERROR_AL_ANIADIR);
 
         }
 
