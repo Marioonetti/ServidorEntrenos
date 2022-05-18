@@ -12,6 +12,7 @@ import model.dto.ApiError;
 import model.dto.EntrenamientoDTO;
 import services.entrenamiento.EntrenamientoService;
 import utils.constantes.RestConstants;
+import utils.constantes.RestParams;
 
 import java.util.List;
 
@@ -50,9 +51,10 @@ public class RestEntrenamiento {
     }
 
     @GET
+    @Path(RestConstants.ENTRENAMIENTO_DESC_PATH)
     @RolesAllowed({RestConstants.USER_CLIENTE})
-    public Response getEntrenos(@QueryParam("idCliente") int idCliente) {
-        Either<String, List<EntrenamientoDTO>> result = entrenamientoService.getEntrenosCliente(idCliente);
+    public Response getEntrenosDesc(@QueryParam("idCliente") int idCliente) {
+        Either<String, List<EntrenamientoDTO>> result = entrenamientoService.getEntrenosClienteDesc(idCliente);
         Response response = null;
         if (result.isRight()) {
 
@@ -69,5 +71,49 @@ public class RestEntrenamiento {
 
         return response;
     }
+    @GET
+    @Path(RestConstants.ENTRENAMIENTO_ASC_PATH)
+    @RolesAllowed({RestConstants.USER_CLIENTE})
+    public Response getEntrenosAsc(@QueryParam("idCliente") int idCliente) {
+        Either<String, List<EntrenamientoDTO>> result = entrenamientoService.getEntrenosClienteAsc(idCliente);
+        Response response = null;
+        if (result.isRight()) {
+
+            response = Response
+                    .status(Response.Status.OK)
+                    .entity(result.get())
+                    .build();
+        } else {
+            Response
+                    .status(Response.Status.NOT_FOUND)
+                    .entity(new ApiError(result.getLeft()))
+                    .build();
+        }
+
+        return response;
+    }
+
+    @GET
+    @Path(RestConstants.ENTRENAMIENTO_BY_ID_PATH)
+    @RolesAllowed({RestConstants.USER_CLIENTE})
+    public Response getEntrenoById(@PathParam(RestParams.ID_PARAM) int id) {
+        Either<String, EntrenamientoDTO> result = entrenamientoService.getEntrenosClienteById(id);
+        Response response = null;
+        if (result.isRight()) {
+
+            response = Response
+                    .status(Response.Status.OK)
+                    .entity(result.get())
+                    .build();
+        } else {
+            Response
+                    .status(Response.Status.NOT_FOUND)
+                    .entity(new ApiError(result.getLeft()))
+                    .build();
+        }
+
+        return response;
+    }
+
 
 }

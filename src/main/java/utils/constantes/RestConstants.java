@@ -22,4 +22,7 @@ public class RestConstants {
     public static final String BAJA_ENTRENADOR = "/baja";
     public static final String EJERCICIOS_FILTRO_NOMBRE = "/nombre";
     public static final String ENTRENADOR_ID_PATH = "/{id}";
+    public static final String ENTRENAMIENTO_DESC_PATH = "/desc";
+    public static final String ENTRENAMIENTO_ASC_PATH = "/asc";
+    public static final String ENTRENAMIENTO_BY_ID_PATH = "/{id}";
 }

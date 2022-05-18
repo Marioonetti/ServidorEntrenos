@@ -14,7 +14,8 @@ public class SerieMapper implements RowMapper<Serie> {
                 rs.getInt("id"),
                 rs.getInt("rir"),
                 rs.getString("series_repeticiones"),
-                rs.getInt("idEjercicio")
+                rs.getInt("idEjercicio"),
+                rs.getString("enfoque")
         );
     }
 

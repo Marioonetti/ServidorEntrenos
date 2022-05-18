@@ -15,6 +15,7 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import utils.constantes.Mensajes;
 
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.util.List;
@@ -45,6 +46,8 @@ public class EntrenamientoDAO {
                         connection.prepareStatement(Queries.INSERT_ENTRENO, Statement.RETURN_GENERATED_KEYS);
                 preparedStatement.setString(1, entreno.getComentario());
                 preparedStatement.setInt(2, entreno.getIdCliente());
+                preparedStatement.setDate(3, Date.valueOf(entreno.getFecha()));
+                preparedStatement.setString(4, entreno.getTitulo());
                 return preparedStatement;
             }, keyHolder);
             int idEntreno = keyHolder.getKey().intValue();
@@ -59,6 +62,7 @@ public class EntrenamientoDAO {
                             preparedStatement.setInt(1, serie.getRir());
                             preparedStatement.setString(2, serie.getSeriesRepeticiones());
                             preparedStatement.setInt(3, serie.getIdEjercicio());
+                            preparedStatement.setString(4, serie.getEnfoque());
                             return preparedStatement;
                         }, keyHolder);
                         int idSerie = keyHolder.getKey().intValue();
@@ -71,7 +75,7 @@ public class EntrenamientoDAO {
             entreno.getSeries().forEach(serie ->
                     jdbcTemplate.update(connection -> {
                         PreparedStatement preparedStatement =
-                                connection.prepareStatement(Queries.ENTRENAMIENTOS_POR_CLIENTE);
+                                connection.prepareStatement(Queries.INSERT_ENTRENO_SERIES);
                         preparedStatement.setInt(1, idEntreno);
                         preparedStatement.setInt(2, serie.getId());
                         return preparedStatement;
@@ -90,33 +94,49 @@ public class EntrenamientoDAO {
         return result;
     }
 
-    public Either<String, List<EntrenamientoDTO>> getEntrenos(int idCliente){
-        Either<String, List<EntrenamientoDTO>> result;
-        List<EntrenamientoDTO> listEntrenos= null;
+
+    public Either<String, EntrenamientoDTO> getEntrenosById(int idEntreno){
+        Either<String, EntrenamientoDTO> result;
+        EntrenamientoDTO entreno= null;
 
         try {
             JdbcTemplate jdbcTemplate = new JdbcTemplate(pool.getDataSource());
 //            Primero Saco todos los entrenos por id
 
-            listEntrenos = jdbcTemplate.query(Queries.GET_ENTRENOS_CLIENTE,
-                    new EntrenoMapper(), idCliente);
+            entreno = jdbcTemplate.queryForObject(Queries.GET_ENTRENO_BY_ID,
+                    new EntrenoMapper(), idEntreno);
 
-            listEntrenos.forEach(entreno -> {
-//                Saco todas las series de ese entreno
-                List<Serie> listSerie = jdbcTemplate.query(Queries.GET_SERIES_ENTRENO,
-                        new SerieMapper(), entreno.getId());
-                entreno.setSeries(listSerie);
-
+            List<Serie> listSerie = getSeries(jdbcTemplate, entreno);
+            entreno.setSeries(listSerie);
 //                Saco los ejs y se los añado a cada serie
-                listSerie.forEach(serie ->{
-                    Either<String, EjercicioDTO> ejById = ejerciciosDAO.getEjercicioById(serie.getIdEjercicio());
-                    if (ejById.isRight()){
-                        serie.setEjercicio(ejById.get());
-                    }
-                        });
-
+            listSerie.forEach(serie ->{
+                Either<String, EjercicioDTO> ejById = ejerciciosDAO.getEjercicioById(serie.getIdEjercicio());
+                if (ejById.isRight()){
+                    serie.setEjercicio(ejById.get());
+                }
             });
 
+            result = Either.right(entreno);
+        } catch (Exception ex) {
+            log.error(ex.getMessage());
+            result = Either.left(Mensajes.ERROR_AL_EXTRAER_LOS_DATOS);
+
+        }
+
+
+        return result;
+    }
+
+    public Either<String, List<EntrenamientoDTO>> getEntrenosDesc(int idCliente){
+        Either<String, List<EntrenamientoDTO>> result;
+        List<EntrenamientoDTO> listEntrenos;
+
+        try {
+            JdbcTemplate jdbcTemplate = new JdbcTemplate(pool.getDataSource());
+
+            listEntrenos = jdbcTemplate.query(Queries.GET_ENTRENOS_FECHA_DESC,
+                    new EntrenoMapper(), idCliente);
+            completeData(jdbcTemplate, listEntrenos);
 
             result = Either.right(listEntrenos);
         } catch (Exception ex) {
@@ -129,5 +149,55 @@ public class EntrenamientoDAO {
         return result;
     }
 
+    public Either<String, List<EntrenamientoDTO>> getEntrenosFechaAsc(int idCliente){
+        Either<String, List<EntrenamientoDTO>> result;
+        List<EntrenamientoDTO> listEntrenos;
+
+        try {
+            JdbcTemplate jdbcTemplate = new JdbcTemplate(pool.getDataSource());
+//            Primero Saco todos los entrenos por id
+
+            listEntrenos = jdbcTemplate.query(Queries.GET_ENTRENOS_FECHA_ASC,
+                    new EntrenoMapper(), idCliente);
+
+            completeData(jdbcTemplate, listEntrenos);
+
+            result = Either.right(listEntrenos);
+
+        } catch (Exception ex) {
+            log.error(ex.getMessage());
+            result = Either.left(Mensajes.ERROR_AL_EXTRAER_LOS_DATOS);
+
+        }
+
+
+        return result;
+    }
+
+
+    private void completeData(JdbcTemplate jdbcTemplate, List<EntrenamientoDTO> listEntrenos){
+        listEntrenos.forEach(entreno -> {
+//                Saco todas las series de ese entreno
+
+            List<Serie> listSerie = getSeries(jdbcTemplate, entreno);
+            entreno.setSeries(listSerie);
+
+//                Saco los ejs y se los añado a cada serie
+            listSerie.forEach(serie ->{
+                Either<String, EjercicioDTO> ejById = ejerciciosDAO.getEjercicioById(serie.getIdEjercicio());
+                if (ejById.isRight()){
+                    serie.setEjercicio(ejById.get());
+                }
+            });
+
+        });
+    }
+
+
+
+    private List<Serie> getSeries(JdbcTemplate jdbcTemplate, EntrenamientoDTO entreno){
+        return jdbcTemplate.query(Queries.GET_SERIES_ENTRENO,
+                new SerieMapper(), entreno.getId());
+    }
 
 }

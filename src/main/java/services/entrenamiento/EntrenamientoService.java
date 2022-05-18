@@ -20,7 +20,15 @@ public class EntrenamientoService {
         return dao.addEntreno(entreno);
     }
 
-    public Either<String, List<EntrenamientoDTO>> getEntrenosCliente(int idCliente) {
-        return dao.getEntrenos(idCliente);
+    public Either<String, List<EntrenamientoDTO>> getEntrenosClienteDesc(int idCliente) {
+        return dao.getEntrenosDesc(idCliente);
+    }
+
+    public Either<String, List<EntrenamientoDTO>> getEntrenosClienteAsc(int idCliente) {
+        return dao.getEntrenosFechaAsc(idCliente);
+    }
+
+    public Either<String, EntrenamientoDTO> getEntrenosClienteById(int idEntreno) {
+        return dao.getEntrenosById(idEntreno);
     }
 }

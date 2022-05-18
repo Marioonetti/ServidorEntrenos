@@ -5,6 +5,7 @@ import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 
 public class EntrenoMapper implements RowMapper<EntrenamientoDTO> {
 
@@ -13,7 +14,10 @@ public class EntrenoMapper implements RowMapper<EntrenamientoDTO> {
         return new EntrenamientoDTO(
                 rs.getInt("id"),
                 rs.getString("comentario"),
-                rs.getInt("idCliente")
+                rs.getInt("idCliente"),
+                LocalDate.parse(rs.getDate("fecha").toString()),
+                rs.getString("titulo")
+
         );
     }
 
