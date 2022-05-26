@@ -77,6 +77,29 @@ public class RestEjercicios {
         return response;
     }
 
+    @GET
+    @Path(RestConstants.EJERCICIO_ID_PATH)
+    @RolesAllowed({RestConstants.USER_CLIENTE})
+    public Response getEjercicioById(@PathParam(RestParams.ID_PARAM) int id){
+        Either<String, EjercicioDTO> result = ejerciciosService.getById(id);
+        Response response;
+
+        if (result.isRight()){
+            response = Response
+                    .status(Response.Status.OK)
+                    .entity(result.get())
+                    .build();
+        }
+        else {
+            response = Response
+                    .status(Response.Status.NOT_FOUND)
+                    .entity(new ApiError(result.getLeft()))
+                    .build();
+        }
+
+        return response;
+    }
+
     @POST
     @RolesAllowed({RestConstants.USER_TRAINER})
     public Response addEjercicio(EjercicioDTO ejercicioDTO){

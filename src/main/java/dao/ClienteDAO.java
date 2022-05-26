@@ -7,6 +7,7 @@ import jakarta.inject.Inject;
 import lombok.extern.log4j.Log4j2;
 import model.dto.ClienteDTO;
 import model.dto.EntrenadorDTO;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import utils.constantes.Mensajes;
 
@@ -68,6 +69,25 @@ public class ClienteDAO {
             else {
                 result = Either.left(Mensajes.ERROR_BAJA_ENTRENADOR);
             }
+
+        } catch (Exception ex) {
+            log.error(ex.getMessage());
+            result = Either.left(Mensajes.ERROR_DESCONOCIDO);
+        }
+
+        return result;
+
+
+    }
+
+
+    public Either<String, ClienteDTO> getClienteById(int idCliente){
+        Either<String, ClienteDTO> result;
+        try {
+            JdbcTemplate jdbcTemplate = new JdbcTemplate(pool.getDataSource());
+            ClienteDTO cliente = jdbcTemplate.queryForObject(Queries.GET_CLIENTE_BY_ID,
+                    BeanPropertyRowMapper.newInstance(ClienteDTO.class), idCliente);
+            result = Either.right(cliente);
 
         } catch (Exception ex) {
             log.error(ex.getMessage());

@@ -76,7 +76,7 @@ public class EjerciciosDAO {
                     new BeanPropertyRowMapper<>(EjercicioDTO.class), id);
             result = Either.right(ejercicio);
 
-        }catch (DataAccessException ex){
+        }catch (Exception ex){
             log.error(ex.getMessage());
             result = Either.left(Mensajes.ERROR_AL_EXTRAER_LOS_DATOS);
 
@@ -93,7 +93,7 @@ public class EjerciciosDAO {
             JdbcTemplate jdbcTemplate = new JdbcTemplate(pool.getDataSource());
             jdbcTemplate.update(connection -> {
                 PreparedStatement preparedStatement =
-                        connection.prepareStatement(Queries.INSERT_EQUIPO_QUERIE, Statement.RETURN_GENERATED_KEYS);
+                        connection.prepareStatement(Queries.INSERT_EJERCICIO_QUERIE, Statement.RETURN_GENERATED_KEYS);
                 preparedStatement.setString(1, ejercicioDTO.getNombre());
                 preparedStatement.setString(2, ejercicioDTO.getIntensidad());
                 preparedStatement.setString(3, ejercicioDTO.getGrupoMuscular());

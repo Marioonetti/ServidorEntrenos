@@ -19,8 +19,6 @@ public class ConfigYaml {
     private String path;
     private String driver;
     private String host;
-    private String userCorreo;
-    private String passwCorreo;
 
     void cargar() {
 

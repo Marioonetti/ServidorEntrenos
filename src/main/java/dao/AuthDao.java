@@ -122,6 +122,8 @@ public class AuthDao {
                 preparedStatement.setString(3, entrenador.getDescripcion());
                 preparedStatement.setObject(4, entrenador.getNombre());
                 preparedStatement.setString(5, entrenador.getApellidos());
+                preparedStatement.setInt(6, entrenador.getEdad());
+                preparedStatement.setString(7, entrenador.getImagen());
                 return preparedStatement;
             }, keyHolder);
             entrenador.setId(keyHolder.getKey().intValue());

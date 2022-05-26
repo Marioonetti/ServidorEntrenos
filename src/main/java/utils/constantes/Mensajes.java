@@ -1,7 +1,7 @@
 package utils.constantes;
 
 public class Mensajes {
-    public static final String ERROR_AL_EXTRAER_LOS_DATOS = "Usuario o contraseña Incorrectos";
+    public static final String ERROR_AL_EXTRAER_LOS_DATOS = "Error al acceder a la base de datos";
     public static final String EJERCICIO_EXISTENTE = "Ese ejercicio ya existe";
     public static final String ERROR_CIFRAR = "Error al cifrar";
     public static final String USUARIO_O_CONTRASENIA_INCORRECTOS = "Mensaje o contraseña incorrectos";

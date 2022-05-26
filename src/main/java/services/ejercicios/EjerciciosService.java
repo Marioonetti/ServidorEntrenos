@@ -28,4 +28,8 @@ public class EjerciciosService {
         return dao.getEjerciciosByName(nombre);
     }
 
+    public Either<String, EjercicioDTO> getById(int id){
+        return dao.getEjercicioById(id);
+    }
+
 }

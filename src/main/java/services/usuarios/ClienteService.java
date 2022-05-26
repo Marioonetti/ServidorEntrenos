@@ -23,4 +23,9 @@ public class ClienteService {
         return dao.darBajaEntrenador(clienteDTO);
     }
 
+
+    public Either<String, ClienteDTO> getClienteById(int idCliente){
+        return dao.getClienteById(idCliente);
+    }
+
 }
