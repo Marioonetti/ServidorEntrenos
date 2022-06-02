@@ -13,6 +13,8 @@ import services.usuarios.ClienteService;
 import utils.constantes.RestConstants;
 import utils.constantes.RestParams;
 
+import java.util.List;
+
 @Path(RestConstants.CLIENTE_PATH)
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
@@ -95,5 +97,28 @@ public class RestCliente {
 
         return response;
     }
+
+    @GET
+    @RolesAllowed({RestConstants.USER_TRAINER})
+    public Response getClientesPorEntrenador(@QueryParam(RestParams.ID_PARAM) int idEntrenador){
+        Response response = null;
+        Either<String, List<ClienteDTO>> result = service.getClientesPorEntrenador(idEntrenador);
+        if (result.isRight()){
+
+            response = Response
+                    .status(Response.Status.CREATED)
+                    .entity(result.get())
+                    .build();
+        }
+        else {
+            Response
+                    .status(Response.Status.NOT_FOUND)
+                    .entity(new ApiError(result.getLeft()))
+                    .build();
+        }
+
+        return response;
+    }
+
 
 }

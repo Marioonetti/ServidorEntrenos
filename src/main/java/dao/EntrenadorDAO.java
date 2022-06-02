@@ -26,24 +26,6 @@ public class EntrenadorDAO {
         this.pool = pool;
     }
 
-    public Either<String, EntrenadorDTO> addDescipcion(EntrenadorDTO entrenadorDTO){
-
-        Either<String, EntrenadorDTO> result;
-        try {
-            JdbcTemplate jdbcTemplate = new JdbcTemplate(pool.getDataSource());
-            jdbcTemplate.update(Queries.ADD_DESCRIPCION,
-                    entrenadorDTO.getDescripcion(),
-                    entrenadorDTO.getId());
-            result = Either.right(entrenadorDTO);
-        } catch (Exception ex) {
-            log.error(ex.getMessage());
-            result = Either.left(Mensajes.ERROR_DESCONOCIDO);
-        }
-
-        return result;
-
-
-    }
 
 
     public Either<String, List<EntrenadorDTO>> getAllEntrenadores(){
@@ -56,6 +38,33 @@ public class EntrenadorDAO {
             entrenadoresList.removeIf(entrenador ->
                     entrenador.getId() == 0);
             result = Either.right(entrenadoresList);
+        } catch (Exception ex) {
+            log.error(ex.getMessage());
+            result = Either.left(Mensajes.ERROR_DESCONOCIDO);
+        }
+
+        return result;
+
+
+    }
+
+    public Either<String, EntrenadorDTO> updateEntrenador(EntrenadorDTO entrenadorDTO){
+
+        Either<String, EntrenadorDTO>result;
+        try {
+            JdbcTemplate jdbcTemplate = new JdbcTemplate(pool.getDataSource());
+            int updated = jdbcTemplate.update(Queries.UPDATE_ENTRENADOR_DATA,
+                    entrenadorDTO.getUsername(), entrenadorDTO.getPassword(),
+                    entrenadorDTO.getImagen(), entrenadorDTO.getDescripcion(),
+                    entrenadorDTO.getId()
+                    );
+            if (updated ==1){
+                result = Either.right(entrenadorDTO);
+            }
+            else {
+                result = Either.left(Mensajes.ERROR_FALLO_ACTUALIZAR);
+            }
+
         } catch (Exception ex) {
             log.error(ex.getMessage());
             result = Either.left(Mensajes.ERROR_DESCONOCIDO);

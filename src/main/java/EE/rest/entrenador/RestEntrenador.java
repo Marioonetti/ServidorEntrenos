@@ -31,9 +31,9 @@ public class RestEntrenador {
 
     @PUT
     @RolesAllowed({RestConstants.USER_TRAINER})
-    public Response addDescripcion(EntrenadorDTO entrenadorDTO){
+    public Response updateData(EntrenadorDTO entrenadorDTO){
         Response response = null;
-        Either<String, EntrenadorDTO> result = service.addDescripcion(entrenadorDTO);
+        Either<String, EntrenadorDTO> result = service.updateEntrenador(entrenadorDTO);
         if (result.isRight()){
 
             response = Response

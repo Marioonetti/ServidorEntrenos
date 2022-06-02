@@ -32,4 +32,7 @@ public class Queries {
     public static final String GET_ALL_ENTRENADORES = "select *  from entrenador;";
     public static final String SELECT_ID_ENTRENADOR = "select idEntrenador from cliente where id = ?;";
     public static final String GET_CLIENTE_BY_ID = "select * from cliente where id = ?;";
+
+    public static final String GET_ALL_CLIENTES_BY_IDENTRENADOR = "select * from cliente where idEntrenador = ?;";
+    public static final String UPDATE_ENTRENADOR_DATA = "update entrenador set username = ? , password = ? , imagen = ?, descripcion =? where id = ?;";
 }

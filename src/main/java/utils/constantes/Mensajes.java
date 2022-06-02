@@ -15,4 +15,5 @@ public class Mensajes {
     public static final String ERROR_DESCONOCIDO = "Error desconocido";
     public static final String ERROR_ALTA_CLIENTE = "Ya tienes un entrenado contratado";
     public static final String ERROR_BAJA_ENTRENADOR = "No hay ningún entrenador para dar de baja";
+    public static final String ERROR_FALLO_ACTUALIZAR = "No se ha actualizado el usuario";
 }

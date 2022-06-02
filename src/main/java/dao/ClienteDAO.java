@@ -6,12 +6,11 @@ import io.vavr.control.Either;
 import jakarta.inject.Inject;
 import lombok.extern.log4j.Log4j2;
 import model.dto.ClienteDTO;
-import model.dto.EntrenadorDTO;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import utils.constantes.Mensajes;
 
-import java.time.LocalDateTime;
+import java.util.List;
 
 @Log4j2
 public class ClienteDAO {
@@ -99,5 +98,23 @@ public class ClienteDAO {
 
     }
 
+
+    public Either<String, List<ClienteDTO>> getClientesPorEntrenador(int idEntrenador){
+        Either<String, List<ClienteDTO>> result;
+        try {
+            JdbcTemplate jdbcTemplate = new JdbcTemplate(pool.getDataSource());
+            List<ClienteDTO> clientes = jdbcTemplate.query(Queries.GET_ALL_CLIENTES_BY_IDENTRENADOR,
+                    BeanPropertyRowMapper.newInstance(ClienteDTO.class), idEntrenador);
+            result = Either.right(clientes);
+
+        } catch (Exception ex) {
+            log.error(ex.getMessage());
+            result = Either.left(Mensajes.ERROR_DESCONOCIDO);
+        }
+
+        return result;
+
+
+    }
 
 }
