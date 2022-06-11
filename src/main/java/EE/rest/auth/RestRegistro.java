@@ -34,15 +34,14 @@ public class RestRegistro {
     @POST
     @Path(RestConstants.REGISTRO_CLIENTE)
     @PermitAll
-    public Response addCliente(ClienteDTO clienteDTO){
+    public Response addCliente(ClienteDTO clienteDTO) {
         Response response;
         Either<String, ClienteDTO> result = authService.addCliente(clienteDTO);
-        if (result.isRight()){
+        if (result.isRight()) {
             response = Response.status(Response.Status.OK)
                     .entity(result.get())
                     .build();
-        }
-        else {
+        } else {
             response = Response.status(Response.Status.NOT_FOUND)
                     .entity(new ApiError(result.getLeft()))
                     .build();
@@ -55,15 +54,14 @@ public class RestRegistro {
     @POST
     @Path(RestConstants.REGISTRO_ENTRENADOR)
     @RolesAllowed({RestConstants.USER_TRAINER})
-    public Response addEntrenador(EntrenadorDTO entrenadorDTO){
+    public Response addEntrenador(EntrenadorDTO entrenadorDTO) {
         Response response;
         Either<String, EntrenadorDTO> result = authService.addEntrenador(entrenadorDTO);
-        if (result.isRight()){
+        if (result.isRight()) {
             response = Response.status(Response.Status.OK)
                     .entity(result.get())
                     .build();
-        }
-        else {
+        } else {
             response = Response.status(Response.Status.NOT_FOUND)
                     .entity(new ApiError(result.getLeft()))
                     .build();

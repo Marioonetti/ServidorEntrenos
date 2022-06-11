@@ -43,7 +43,7 @@ public class AuthDao {
 
         } catch (Exception ex) {
             log.error(ex.getMessage());
-            result = Either.left(Mensajes.ERROR_AL_EXTRAER_LOS_DATOS);
+            result = Either.left(Mensajes.NO_EXISE_ESE_USUARIO);
 
         }
 
@@ -60,7 +60,7 @@ public class AuthDao {
             ClienteDTO cliente = jdbcTemplate.queryForObject(Queries.GET_CLIENTE,
                     BeanPropertyRowMapper.newInstance(ClienteDTO.class), username);
             if (cliente != null) {
-                if (cliente.getIdEntrenador() == 1){
+                if (cliente.getIdEntrenador() == 1) {
                     cliente.setIdEntrenador(0);
                 }
                 result = Either.right(cliente);
@@ -70,7 +70,7 @@ public class AuthDao {
 
         } catch (Exception ex) {
             log.error(ex.getMessage());
-            result = Either.left(Mensajes.ERROR_AL_EXTRAER_LOS_DATOS);
+            result = Either.left(Mensajes.NO_EXISE_ESE_USUARIO);
 
         }
 

@@ -16,19 +16,19 @@ public class EjerciciosService {
         this.dao = dao;
     }
 
-    public Either<String, List<EjercicioDTO>> getAll(){
+    public Either<String, List<EjercicioDTO>> getAll() {
         return dao.getAllEjercicios();
     }
 
-    public Either<String, EjercicioDTO> addEjercicio(EjercicioDTO ejercicioDTO){
+    public Either<String, EjercicioDTO> addEjercicio(EjercicioDTO ejercicioDTO) {
         return dao.addEjercicio(ejercicioDTO);
     }
 
-    public Either<String, List<EjercicioDTO>> getEjerciciosByName(String nombre){
+    public Either<String, List<EjercicioDTO>> getEjerciciosByName(String nombre) {
         return dao.getEjerciciosByName(nombre);
     }
 
-    public Either<String, EjercicioDTO> getById(int id){
+    public Either<String, EjercicioDTO> getById(int id) {
         return dao.getEjercicioById(id);
     }
 

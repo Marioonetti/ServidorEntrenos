@@ -3,8 +3,8 @@ package EE.rest.entrenador;
 
 import io.vavr.control.Either;
 import jakarta.annotation.security.RolesAllowed;
-import jakarta.ws.rs.*;
 import jakarta.inject.Inject;
+import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import lombok.extern.log4j.Log4j2;
@@ -31,17 +31,16 @@ public class RestEntrenador {
 
     @PUT
     @RolesAllowed({RestConstants.USER_TRAINER})
-    public Response updateData(EntrenadorDTO entrenadorDTO){
+    public Response updateData(EntrenadorDTO entrenadorDTO) {
         Response response = null;
         Either<String, EntrenadorDTO> result = service.updateEntrenador(entrenadorDTO);
-        if (result.isRight()){
+        if (result.isRight()) {
 
             response = Response
                     .status(Response.Status.CREATED)
                     .entity(result.get())
                     .build();
-        }
-        else {
+        } else {
             Response
                     .status(Response.Status.NOT_FOUND)
                     .entity(new ApiError(result.getLeft()))
@@ -54,17 +53,16 @@ public class RestEntrenador {
 
     @GET
     @RolesAllowed({RestConstants.USER_CLIENTE})
-    public Response getAll(){
+    public Response getAll() {
         Response response = null;
         Either<String, List<EntrenadorDTO>> result = service.getAllEntrenadores();
-        if (result.isRight()){
+        if (result.isRight()) {
 
             response = Response
                     .status(Response.Status.OK)
                     .entity(result.get())
                     .build();
-        }
-        else {
+        } else {
             Response
                     .status(Response.Status.NOT_FOUND)
                     .entity(new ApiError(result.getLeft()))
@@ -78,17 +76,16 @@ public class RestEntrenador {
     @GET
     @Path(RestConstants.ENTRENADOR_ID_PATH)
     @RolesAllowed({RestConstants.USER_CLIENTE})
-    public Response getById(@PathParam(RestParams.ID_PARAM) int id){
+    public Response getById(@PathParam(RestParams.ID_PARAM) int id) {
         Response response = null;
         Either<String, EntrenadorDTO> result = service.getById(id);
-        if (result.isRight()){
+        if (result.isRight()) {
 
             response = Response
                     .status(Response.Status.OK)
                     .entity(result.get())
                     .build();
-        }
-        else {
+        } else {
             Response
                     .status(Response.Status.NOT_FOUND)
                     .entity(new ApiError(result.getLeft()))

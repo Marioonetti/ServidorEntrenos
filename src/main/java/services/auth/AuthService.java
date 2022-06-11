@@ -39,8 +39,7 @@ public class AuthService {
                 resultDao.get().setPassword(null);
                 result = Either.right(resultDao.get());
             } else {
-//                Tratar contra incorrecta
-                result = Either.left(Mensajes.USUARIO_O_CONTRASENIA_INCORRECTOS);
+                result = Either.left(Mensajes.NO_EXISE_ESE_USUARIO);
 
             }
         } else {
@@ -59,8 +58,8 @@ public class AuthService {
                 resultDao.get().setPassword(null);
                 result = Either.right(resultDao.get());
             } else {
-//                Tratar contra incorrecta
-                result = Either.left(Mensajes.USUARIO_O_CONTRASENIA_INCORRECTOS);
+
+                result = Either.left(Mensajes.NO_EXISE_ESE_USUARIO);
 
             }
         } else {

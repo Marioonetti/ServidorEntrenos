@@ -30,7 +30,7 @@ public class EjerciciosDAO {
         this.pool = pool;
     }
 
-    public Either<String, List<EjercicioDTO>> getAllEjercicios(){
+    public Either<String, List<EjercicioDTO>> getAllEjercicios() {
 
         Either<String, List<EjercicioDTO>> result;
 
@@ -40,7 +40,7 @@ public class EjerciciosDAO {
                     new BeanPropertyRowMapper<>(EjercicioDTO.class));
             result = Either.right(purchaseList);
 
-        }catch (DataAccessException ex){
+        } catch (DataAccessException ex) {
             log.error(ex.getMessage());
             result = Either.left(Mensajes.ERROR_AL_EXTRAER_LOS_DATOS);
 
@@ -49,7 +49,7 @@ public class EjerciciosDAO {
     }
 
 
-    public Either<String, List<EjercicioDTO>> getEjerciciosByName(String nombre){
+    public Either<String, List<EjercicioDTO>> getEjerciciosByName(String nombre) {
         Either<String, List<EjercicioDTO>> result;
 
         try {
@@ -58,7 +58,7 @@ public class EjerciciosDAO {
                     new EjercicioMapper(), nombre);
             result = Either.right(purchaseList);
 
-        }catch (DataAccessException ex){
+        } catch (DataAccessException ex) {
             log.error(ex.getMessage());
             result = Either.left(Mensajes.ERROR_DESCONOCIDO);
 
@@ -66,7 +66,7 @@ public class EjerciciosDAO {
         return result;
     }
 
-    public Either<String, EjercicioDTO> getEjercicioById(int id){
+    public Either<String, EjercicioDTO> getEjercicioById(int id) {
 
         Either<String, EjercicioDTO> result;
 
@@ -76,7 +76,7 @@ public class EjerciciosDAO {
                     new BeanPropertyRowMapper<>(EjercicioDTO.class), id);
             result = Either.right(ejercicio);
 
-        }catch (Exception ex){
+        } catch (Exception ex) {
             log.error(ex.getMessage());
             result = Either.left(Mensajes.ERROR_AL_EXTRAER_LOS_DATOS);
 

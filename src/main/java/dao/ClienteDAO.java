@@ -23,7 +23,7 @@ public class ClienteDAO {
     }
 
 
-    public Either<String, ClienteDTO> darAltaEntrenador(ClienteDTO cliente){
+    public Either<String, ClienteDTO> darAltaEntrenador(ClienteDTO cliente) {
         Either<String, ClienteDTO> result;
         try {
             JdbcTemplate jdbcTemplate = new JdbcTemplate(pool.getDataSource());
@@ -31,13 +31,12 @@ public class ClienteDAO {
             int idEntrenador = jdbcTemplate.queryForObject(Queries.SELECT_ID_ENTRENADOR,
                     Integer.class, cliente.getId());
 
-            if (idEntrenador == 0){
+            if (idEntrenador == 0) {
                 jdbcTemplate.update(Queries.ALTA_ENTRENADOR,
                         cliente.getIdEntrenador(),
                         cliente.getId());
                 result = Either.right(cliente);
-            }
-            else {
+            } else {
                 result = Either.left(Mensajes.ERROR_ALTA_CLIENTE);
             }
 
@@ -52,20 +51,19 @@ public class ClienteDAO {
     }
 
 
-    public Either<String, ClienteDTO> darBajaEntrenador(ClienteDTO clienteDTO){
+    public Either<String, ClienteDTO> darBajaEntrenador(ClienteDTO clienteDTO) {
         Either<String, ClienteDTO> result;
         try {
             JdbcTemplate jdbcTemplate = new JdbcTemplate(pool.getDataSource());
             int idEntrenador = jdbcTemplate.queryForObject(Queries.SELECT_ID_ENTRENADOR,
                     Integer.class, clienteDTO.getId());
 
-            if (idEntrenador != 0){
+            if (idEntrenador != 0) {
                 jdbcTemplate.update(Queries.BAJA_ENTRENADOR,
                         clienteDTO.getId());
                 clienteDTO.setIdEntrenador(0);
                 result = Either.right(clienteDTO);
-            }
-            else {
+            } else {
                 result = Either.left(Mensajes.ERROR_BAJA_ENTRENADOR);
             }
 
@@ -80,7 +78,7 @@ public class ClienteDAO {
     }
 
 
-    public Either<String, ClienteDTO> getClienteById(int idCliente){
+    public Either<String, ClienteDTO> getClienteById(int idCliente) {
         Either<String, ClienteDTO> result;
         try {
             JdbcTemplate jdbcTemplate = new JdbcTemplate(pool.getDataSource());
@@ -99,14 +97,22 @@ public class ClienteDAO {
     }
 
 
-    public Either<String, List<ClienteDTO>> getClientesPorEntrenador(int idEntrenador){
+    public Either<String, List<ClienteDTO>> getClientesPorEntrenador(int idEntrenador) {
         Either<String, List<ClienteDTO>> result;
         try {
-            JdbcTemplate jdbcTemplate = new JdbcTemplate(pool.getDataSource());
-            List<ClienteDTO> clientes = jdbcTemplate.query(Queries.GET_ALL_CLIENTES_BY_IDENTRENADOR,
-                    BeanPropertyRowMapper.newInstance(ClienteDTO.class), idEntrenador);
-            result = Either.right(clientes);
+            if (idEntrenador != 0) {
+                JdbcTemplate jdbcTemplate = new JdbcTemplate(pool.getDataSource());
+                List<ClienteDTO> clientes = jdbcTemplate.query(Queries.GET_ALL_CLIENTES_BY_IDENTRENADOR,
+                        BeanPropertyRowMapper.newInstance(ClienteDTO.class), idEntrenador);
+                if (clientes.isEmpty()) {
+                    result = Either.left(Mensajes.ERROR_NO_HAY_CLIENTES);
+                } else {
+                    result = Either.right(clientes);
+                }
 
+            } else {
+                result = Either.left(Mensajes.ERROR_NO_HAY_CLIENTES_BY_ID);
+            }
         } catch (Exception ex) {
             log.error(ex.getMessage());
             result = Either.left(Mensajes.ERROR_DESCONOCIDO);

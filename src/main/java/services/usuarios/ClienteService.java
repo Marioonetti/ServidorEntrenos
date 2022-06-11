@@ -17,21 +17,21 @@ public class ClienteService {
     }
 
 
-    public Either<String, ClienteDTO> darAltaEntrenador(ClienteDTO clienteDTO){
+    public Either<String, ClienteDTO> darAltaEntrenador(ClienteDTO clienteDTO) {
         return dao.darAltaEntrenador(clienteDTO);
     }
 
-    public Either<String, ClienteDTO> darBajaEntrenador(ClienteDTO clienteDTO){
+    public Either<String, ClienteDTO> darBajaEntrenador(ClienteDTO clienteDTO) {
         return dao.darBajaEntrenador(clienteDTO);
     }
 
 
-    public Either<String, ClienteDTO> getClienteById(int idCliente){
+    public Either<String, ClienteDTO> getClienteById(int idCliente) {
         return dao.getClienteById(idCliente);
     }
 
 
-    public Either<String, List<ClienteDTO>> getClientesPorEntrenador(int idEntrenador){
+    public Either<String, List<ClienteDTO>> getClientesPorEntrenador(int idEntrenador) {
         return dao.getClientesPorEntrenador(idEntrenador);
     }
 

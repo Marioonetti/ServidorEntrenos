@@ -24,7 +24,6 @@ public class Queries {
             "where id in (select idSerie from entrenamiento_series where idEntrenamiento = ?);";
 
     public static final String GET_EJERCICIO_BY_ID = "select * from ejercicio where id = ?;";
-    public static final String ADD_DESCRIPCION = "update entrenador set descripcion = ? where id = ?;";
     public static final String ALTA_ENTRENADOR = "update cliente set idEntrenador = ? where  id = ?;";
     public static final String BAJA_ENTRENADOR = "update cliente set idEntrenador = 0 where  id = ?;";
     public static final String ENTRENADOR_BY_ID = "select  * from entrenador where id = ?;";
@@ -34,5 +33,5 @@ public class Queries {
     public static final String GET_CLIENTE_BY_ID = "select * from cliente where id = ?;";
 
     public static final String GET_ALL_CLIENTES_BY_IDENTRENADOR = "select * from cliente where idEntrenador = ?;";
-    public static final String UPDATE_ENTRENADOR_DATA = "update entrenador set username = ? , password = ? , imagen = ?, descripcion =? where id = ?;";
+    public static final String UPDATE_ENTRENADOR_DATA = "update entrenador set username = ? , imagen = ?, descripcion =? where id = ?;";
 }

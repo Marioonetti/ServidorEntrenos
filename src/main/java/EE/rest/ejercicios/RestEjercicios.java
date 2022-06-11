@@ -34,17 +34,16 @@ public class RestEjercicios {
 
     @GET
     @RolesAllowed({RestConstants.USER_CLIENTE})
-    public Response getAllEjercicios(){
+    public Response getAllEjercicios() {
         Either<String, List<EjercicioDTO>> result = ejerciciosService.getAll();
         Response response = null;
 
-        if (result.isRight()){
+        if (result.isRight()) {
             response = Response
                     .status(Response.Status.OK)
                     .entity(result.get())
                     .build();
-        }
-        else {
+        } else {
             response = Response
                     .status(Response.Status.NOT_FOUND)
                     .entity(new ApiError(result.getLeft()))
@@ -57,17 +56,16 @@ public class RestEjercicios {
     @GET
     @Path(RestConstants.EJERCICIOS_FILTRO_NOMBRE)
     @RolesAllowed({RestConstants.USER_CLIENTE})
-    public Response getEjerciciosByName(@QueryParam(RestParams.VALUE) String value){
+    public Response getEjerciciosByName(@QueryParam(RestParams.VALUE) String value) {
         Either<String, List<EjercicioDTO>> result = ejerciciosService.getEjerciciosByName(value);
         Response response;
 
-        if (result.isRight()){
+        if (result.isRight()) {
             response = Response
                     .status(Response.Status.OK)
                     .entity(result.get())
                     .build();
-        }
-        else {
+        } else {
             response = Response
                     .status(Response.Status.NOT_FOUND)
                     .entity(new ApiError(result.getLeft()))
@@ -80,17 +78,16 @@ public class RestEjercicios {
     @GET
     @Path(RestConstants.EJERCICIO_ID_PATH)
     @RolesAllowed({RestConstants.USER_CLIENTE})
-    public Response getEjercicioById(@PathParam(RestParams.ID_PARAM) int id){
+    public Response getEjercicioById(@PathParam(RestParams.ID_PARAM) int id) {
         Either<String, EjercicioDTO> result = ejerciciosService.getById(id);
         Response response;
 
-        if (result.isRight()){
+        if (result.isRight()) {
             response = Response
                     .status(Response.Status.OK)
                     .entity(result.get())
                     .build();
-        }
-        else {
+        } else {
             response = Response
                     .status(Response.Status.NOT_FOUND)
                     .entity(new ApiError(result.getLeft()))
@@ -102,17 +99,16 @@ public class RestEjercicios {
 
     @POST
     @RolesAllowed({RestConstants.USER_TRAINER})
-    public Response addEjercicio(EjercicioDTO ejercicioDTO){
+    public Response addEjercicio(EjercicioDTO ejercicioDTO) {
         Either<String, EjercicioDTO> result = ejerciciosService.addEjercicio(ejercicioDTO);
         Response response;
 
-        if (result.isRight()){
+        if (result.isRight()) {
             response = Response
                     .status(Response.Status.OK)
                     .entity(result.get())
                     .build();
-        }
-        else {
+        } else {
             response = Response
                     .status(Response.Status.NOT_FOUND)
                     .entity(new ApiError(result.getLeft()))

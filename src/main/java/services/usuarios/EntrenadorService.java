@@ -20,18 +20,15 @@ public class EntrenadorService {
     }
 
 
-    public Either<String, List<EntrenadorDTO>> getAllEntrenadores(){
+    public Either<String, List<EntrenadorDTO>> getAllEntrenadores() {
         return dao.getAllEntrenadores();
     }
 
-    public Either<String, EntrenadorDTO> getById(int id){
+    public Either<String, EntrenadorDTO> getById(int id) {
         return dao.getEntrenadorById(id);
     }
 
-    public Either<String, EntrenadorDTO> updateEntrenador(EntrenadorDTO entrenadorDTO){
-        if (!entrenadorDTO.getPassword().startsWith("PBKDF2WithHmacSHA512")){
-            entrenadorDTO.setPassword(passwordHash.hash(entrenadorDTO.getPassword()));
-        }
+    public Either<String, EntrenadorDTO> updateEntrenador(EntrenadorDTO entrenadorDTO) {
         return dao.updateEntrenador(entrenadorDTO);
     }
 

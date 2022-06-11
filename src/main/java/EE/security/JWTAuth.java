@@ -106,7 +106,7 @@ public class JWTAuth implements HttpAuthenticationMechanism {
 
         return Jwts.builder()
                 .setExpiration(Date.from(
-                        LocalDateTime.now().plusMinutes(15).atZone(ZoneId.systemDefault())
+                        LocalDateTime.now().plusMinutes(30).atZone(ZoneId.systemDefault())
                                 .toInstant())
                 ).claim(Parametros.USER, credentialValidationResult.getCallerPrincipal().getName())
                 .claim(Parametros.GROUP, credentialValidationResult.getCallerGroups())

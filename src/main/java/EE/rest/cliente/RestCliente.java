@@ -32,16 +32,15 @@ public class RestCliente {
     @PUT
     @Path(RestConstants.ALTA_ENTRENADOR)
     @RolesAllowed({RestConstants.USER_CLIENTE})
-    public Response altaEntrenador(ClienteDTO clienteDTO){
+    public Response altaEntrenador(ClienteDTO clienteDTO) {
         Response response = null;
         Either<String, ClienteDTO> result = service.darAltaEntrenador(clienteDTO);
-        if (result.isRight()){
+        if (result.isRight()) {
             response = Response
                     .status(Response.Status.CREATED)
                     .entity(result.get())
                     .build();
-        }
-        else {
+        } else {
             response = Response
                     .status(Response.Status.NOT_FOUND)
                     .entity(new ApiError(result.getLeft()))
@@ -53,17 +52,16 @@ public class RestCliente {
     @PUT
     @Path(RestConstants.BAJA_ENTRENADOR)
     @RolesAllowed({RestConstants.USER_CLIENTE})
-    public Response bajaEntrenador(ClienteDTO clienteDTO){
+    public Response bajaEntrenador(ClienteDTO clienteDTO) {
         Response response = null;
         Either<String, ClienteDTO> result = service.darBajaEntrenador(clienteDTO);
-        if (result.isRight()){
+        if (result.isRight()) {
 
             response = Response
                     .status(Response.Status.CREATED)
                     .entity(result.get())
                     .build();
-        }
-        else {
+        } else {
             Response
                     .status(Response.Status.NOT_FOUND)
                     .entity(new ApiError(result.getLeft()))
@@ -74,21 +72,19 @@ public class RestCliente {
     }
 
 
-
     @GET
     @Path(RestConstants.CLIENTE_ID_PATH)
     @RolesAllowed({RestConstants.USER_CLIENTE})
-    public Response getClienteById(@PathParam(RestParams.ID_PARAM) int idCliente){
+    public Response getClienteById(@PathParam(RestParams.ID_PARAM) int idCliente) {
         Response response = null;
         Either<String, ClienteDTO> result = service.getClienteById(idCliente);
-        if (result.isRight()){
+        if (result.isRight()) {
 
             response = Response
                     .status(Response.Status.CREATED)
                     .entity(result.get())
                     .build();
-        }
-        else {
+        } else {
             Response
                     .status(Response.Status.NOT_FOUND)
                     .entity(new ApiError(result.getLeft()))
@@ -100,17 +96,16 @@ public class RestCliente {
 
     @GET
     @RolesAllowed({RestConstants.USER_TRAINER})
-    public Response getClientesPorEntrenador(@QueryParam(RestParams.ID_PARAM) int idEntrenador){
+    public Response getClientesPorEntrenador(@QueryParam(RestParams.ID_PARAM) int idEntrenador) {
         Response response = null;
         Either<String, List<ClienteDTO>> result = service.getClientesPorEntrenador(idEntrenador);
-        if (result.isRight()){
+        if (result.isRight()) {
 
             response = Response
                     .status(Response.Status.CREATED)
                     .entity(result.get())
                     .build();
-        }
-        else {
+        } else {
             Response
                     .status(Response.Status.NOT_FOUND)
                     .entity(new ApiError(result.getLeft()))

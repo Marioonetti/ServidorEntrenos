@@ -9,7 +9,6 @@ import jakarta.security.enterprise.identitystore.IdentityStore;
 import jakarta.security.enterprise.identitystore.Pbkdf2PasswordHash;
 import model.dto.ClienteDTO;
 import model.dto.EntrenadorDTO;
-import model.dto.UserDTO;
 import services.auth.AuthService;
 import utils.constantes.RestConstants;
 
@@ -47,24 +46,23 @@ public class InMemoryIdentityStore implements IdentityStore {
 
             if (resultObetenerCli.isRight()) {
                 if (passwordHash.verify(user.getPasswordAsString().toCharArray(), resultObetenerCli.get().getPassword())) {
-                        credentialValidationResult = new CredentialValidationResult(user.getCaller(), Collections.singleton(RestConstants.USER_CLIENTE));
+                    credentialValidationResult = new CredentialValidationResult(user.getCaller(), Collections.singleton(RestConstants.USER_CLIENTE));
                 } else {
-//                Tratar contra incorrecta
+
                     credentialValidationResult = INVALID_RESULT;
                 }
             } else {
-//            Compruebo que si no es un user sea un entrenador
+
                 Either<String, EntrenadorDTO> resultObtenerEntrenador = authService.getEntrenador(user.getCaller());
-                if (resultObtenerEntrenador.isRight()){
+                if (resultObtenerEntrenador.isRight()) {
                     if (passwordHash.verify(user.getPasswordAsString().toCharArray(), resultObtenerEntrenador.get().getPassword())) {
                         credentialValidationResult = new CredentialValidationResult(user.getCaller(), Set.of(RestConstants.USER_CLIENTE, RestConstants.USER_TRAINER));
                     } else {
-//                Tratar contra incorrecta
+
                         credentialValidationResult = INVALID_RESULT;
                     }
-                }
-                else {
-//                    Tratar que no exista el user
+                } else {
+
                     credentialValidationResult = INVALID_RESULT;
                 }
             }
@@ -73,9 +71,6 @@ public class InMemoryIdentityStore implements IdentityStore {
         }
         return credentialValidationResult;
     }
-
-
-
 
 
 }

@@ -18,6 +18,7 @@ import utils.constantes.Mensajes;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.List;
 
 @Log4j2
@@ -34,7 +35,7 @@ public class EntrenamientoDAO {
     }
 
 
-    public Either<String, EntrenamientoDTO> addEntreno(EntrenamientoDTO entreno){
+    public Either<String, EntrenamientoDTO> addEntreno(EntrenamientoDTO entreno) {
         Either<String, EntrenamientoDTO> result;
 
         try {
@@ -46,7 +47,7 @@ public class EntrenamientoDAO {
                         connection.prepareStatement(Queries.INSERT_ENTRENO, Statement.RETURN_GENERATED_KEYS);
                 preparedStatement.setString(1, entreno.getComentario());
                 preparedStatement.setInt(2, entreno.getIdCliente());
-                preparedStatement.setDate(3, Date.valueOf(entreno.getFecha()));
+                preparedStatement.setDate(3, Date.valueOf(LocalDate.now()));
                 preparedStatement.setString(4, entreno.getTitulo());
                 return preparedStatement;
             }, keyHolder);
@@ -95,9 +96,9 @@ public class EntrenamientoDAO {
     }
 
 
-    public Either<String, EntrenamientoDTO> getEntrenosById(int idEntreno){
+    public Either<String, EntrenamientoDTO> getEntrenosById(int idEntreno) {
         Either<String, EntrenamientoDTO> result;
-        EntrenamientoDTO entreno= null;
+        EntrenamientoDTO entreno = null;
 
         try {
             JdbcTemplate jdbcTemplate = new JdbcTemplate(pool.getDataSource());
@@ -109,9 +110,9 @@ public class EntrenamientoDAO {
             List<Serie> listSerie = getSeries(jdbcTemplate, entreno);
             entreno.setSeries(listSerie);
 //                Saco los ejs y se los añado a cada serie
-            listSerie.forEach(serie ->{
+            listSerie.forEach(serie -> {
                 Either<String, EjercicioDTO> ejById = ejerciciosDAO.getEjercicioById(serie.getIdEjercicio());
-                if (ejById.isRight()){
+                if (ejById.isRight()) {
                     serie.setEjercicio(ejById.get());
                 }
             });
@@ -127,7 +128,7 @@ public class EntrenamientoDAO {
         return result;
     }
 
-    public Either<String, List<EntrenamientoDTO>> getEntrenosDesc(int idCliente){
+    public Either<String, List<EntrenamientoDTO>> getEntrenosDesc(int idCliente) {
         Either<String, List<EntrenamientoDTO>> result;
         List<EntrenamientoDTO> listEntrenos;
 
@@ -149,7 +150,7 @@ public class EntrenamientoDAO {
         return result;
     }
 
-    public Either<String, List<EntrenamientoDTO>> getEntrenosFechaAsc(int idCliente){
+    public Either<String, List<EntrenamientoDTO>> getEntrenosFechaAsc(int idCliente) {
         Either<String, List<EntrenamientoDTO>> result;
         List<EntrenamientoDTO> listEntrenos;
 
@@ -175,7 +176,7 @@ public class EntrenamientoDAO {
     }
 
 
-    private void completeData(JdbcTemplate jdbcTemplate, List<EntrenamientoDTO> listEntrenos){
+    private void completeData(JdbcTemplate jdbcTemplate, List<EntrenamientoDTO> listEntrenos) {
         listEntrenos.forEach(entreno -> {
 //                Saco todas las series de ese entreno
 
@@ -183,9 +184,9 @@ public class EntrenamientoDAO {
             entreno.setSeries(listSerie);
 
 //                Saco los ejs y se los añado a cada serie
-            listSerie.forEach(serie ->{
+            listSerie.forEach(serie -> {
                 Either<String, EjercicioDTO> ejById = ejerciciosDAO.getEjercicioById(serie.getIdEjercicio());
-                if (ejById.isRight()){
+                if (ejById.isRight()) {
                     serie.setEjercicio(ejById.get());
                 }
             });
@@ -194,8 +195,7 @@ public class EntrenamientoDAO {
     }
 
 
-
-    private List<Serie> getSeries(JdbcTemplate jdbcTemplate, EntrenamientoDTO entreno){
+    private List<Serie> getSeries(JdbcTemplate jdbcTemplate, EntrenamientoDTO entreno) {
         return jdbcTemplate.query(Queries.GET_SERIES_ENTRENO,
                 new SerieMapper(), entreno.getId());
     }

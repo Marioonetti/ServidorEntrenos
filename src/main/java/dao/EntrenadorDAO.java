@@ -6,9 +6,7 @@ import dao.utils.Queries;
 import io.vavr.control.Either;
 import jakarta.inject.Inject;
 import lombok.extern.log4j.Log4j2;
-import model.dto.EjercicioDTO;
 import model.dto.EntrenadorDTO;
-import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import utils.constantes.Mensajes;
@@ -27,8 +25,7 @@ public class EntrenadorDAO {
     }
 
 
-
-    public Either<String, List<EntrenadorDTO>> getAllEntrenadores(){
+    public Either<String, List<EntrenadorDTO>> getAllEntrenadores() {
 
         Either<String, List<EntrenadorDTO>> result;
         try {
@@ -48,20 +45,19 @@ public class EntrenadorDAO {
 
     }
 
-    public Either<String, EntrenadorDTO> updateEntrenador(EntrenadorDTO entrenadorDTO){
+    public Either<String, EntrenadorDTO> updateEntrenador(EntrenadorDTO entrenadorDTO) {
 
-        Either<String, EntrenadorDTO>result;
+        Either<String, EntrenadorDTO> result;
         try {
             JdbcTemplate jdbcTemplate = new JdbcTemplate(pool.getDataSource());
             int updated = jdbcTemplate.update(Queries.UPDATE_ENTRENADOR_DATA,
-                    entrenadorDTO.getUsername(), entrenadorDTO.getPassword(),
+                    entrenadorDTO.getUsername(),
                     entrenadorDTO.getImagen(), entrenadorDTO.getDescripcion(),
                     entrenadorDTO.getId()
-                    );
-            if (updated ==1){
+            );
+            if (updated == 1) {
                 result = Either.right(entrenadorDTO);
-            }
-            else {
+            } else {
                 result = Either.left(Mensajes.ERROR_FALLO_ACTUALIZAR);
             }
 
@@ -76,16 +72,18 @@ public class EntrenadorDAO {
     }
 
 
-    public Either<String, EntrenadorDTO> getEntrenadorById(int id){
+    public Either<String, EntrenadorDTO> getEntrenadorById(int id) {
 
         Either<String, EntrenadorDTO> result;
         try {
             JdbcTemplate jdbcTemplate = new JdbcTemplate(pool.getDataSource());
-            EntrenadorDTO entrenadorDTO = jdbcTemplate.queryForObject
-                    (Queries.ENTRENADOR_BY_ID,
-                            new EntrenadorMapper(),
-                    id);
-            result = Either.right(entrenadorDTO);
+            EntrenadorDTO entrenador = jdbcTemplate.queryForObject(Queries.ENTRENADOR_BY_ID,
+                    BeanPropertyRowMapper.newInstance(EntrenadorDTO.class), id);
+            if (entrenador != null) {
+                result = Either.right(entrenador);
+            } else {
+                result = Either.left(Mensajes.NO_EXISE_ESE_USUARIO);
+            }
         } catch (Exception ex) {
             log.error(ex.getMessage());
             result = Either.left(Mensajes.ERROR_DESCONOCIDO);
@@ -95,9 +93,6 @@ public class EntrenadorDAO {
 
 
     }
-
-
-
 
 
 }

@@ -1,7 +1,7 @@
 package dao.datamapper;
 
+import dao.utils.JDBConstantes;
 import model.dto.EjercicioDTO;
-import model.dto.EntrenadorDTO;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;
@@ -12,12 +12,12 @@ public class EjercicioMapper implements RowMapper<EjercicioDTO> {
     @Override
     public EjercicioDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
         return new EjercicioDTO(
-                rs.getInt("id"),
-                rs.getString("nombre"),
-                rs.getString("intensidad"),
-                rs.getString("grupo_muscular"),
-                rs.getString("img"),
-                rs.getString("descripcion")
+                rs.getInt(JDBConstantes.ID),
+                rs.getString(JDBConstantes.NOMBRE),
+                rs.getString(JDBConstantes.INTENSIDAD),
+                rs.getString(JDBConstantes.GRUPO_MUSCULAR),
+                rs.getString(JDBConstantes.IMG),
+                rs.getString(JDBConstantes.DESCRIPCION)
         );
     }
 

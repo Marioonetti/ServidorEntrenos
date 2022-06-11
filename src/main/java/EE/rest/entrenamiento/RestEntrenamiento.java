@@ -37,7 +37,7 @@ public class RestEntrenamiento {
         if (result.isRight()) {
 
             response = Response
-                    .status(Response.Status.CREATED)
+                    .status(Response.Status.OK)
                     .entity(result.get())
                     .build();
         } else {
@@ -53,7 +53,7 @@ public class RestEntrenamiento {
     @GET
     @Path(RestConstants.ENTRENAMIENTO_DESC_PATH)
     @RolesAllowed({RestConstants.USER_CLIENTE})
-    public Response getEntrenosDesc(@QueryParam("idCliente") int idCliente) {
+    public Response getEntrenosDesc(@QueryParam(RestParams.ID_CLIENTE) int idCliente) {
         Either<String, List<EntrenamientoDTO>> result = entrenamientoService.getEntrenosClienteDesc(idCliente);
         Response response = null;
         if (result.isRight()) {
@@ -71,10 +71,11 @@ public class RestEntrenamiento {
 
         return response;
     }
+
     @GET
     @Path(RestConstants.ENTRENAMIENTO_ASC_PATH)
     @RolesAllowed({RestConstants.USER_CLIENTE})
-    public Response getEntrenosAsc(@QueryParam("idCliente") int idCliente) {
+    public Response getEntrenosAsc(@QueryParam(RestParams.ID_CLIENTE) int idCliente) {
         Either<String, List<EntrenamientoDTO>> result = entrenamientoService.getEntrenosClienteAsc(idCliente);
         Response response = null;
         if (result.isRight()) {
